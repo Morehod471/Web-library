@@ -2,7 +2,7 @@ package ru.skypro.lessons.springboot.weblibrary.model;
 
 public class Employee {
 
-    private int idGenerator;
+    private static int idGenerator = 1;
 
     private int id;
     private String name;
@@ -30,4 +30,20 @@ public class Employee {
         this.salary = salary;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
 }
