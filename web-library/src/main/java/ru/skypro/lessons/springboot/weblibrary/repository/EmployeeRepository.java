@@ -27,7 +27,9 @@ public class EmployeeRepository {
     }
 
     public Employee addEmployee(Employee employee) {
+        int newIndex = employeeList.size() + 1;
         employeeList.add(employee);
+        employee.setId(newIndex);
         return employee;
     }
 
