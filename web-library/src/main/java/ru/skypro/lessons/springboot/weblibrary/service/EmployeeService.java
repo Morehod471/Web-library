@@ -10,9 +10,19 @@ public interface EmployeeService {
 
     public Integer findSalary();
 
-    public List<Employee> findSalaryMin();
+    public Employee findSalaryMin();
 
-    public List<Employee> findSalaryMax();
+    public Employee findSalaryMax();
 
     public List<Employee> findSalaryHigh();
+
+    public List<Employee> addEmployee(List<Employee> employeeList);
+
+    public void editEmployee(int id, Employee employee);
+
+    public Employee findEmployeeById(int id);
+
+    public void deleteEmployee(int id);
+
+    public List<Employee> findSalaryHigherThan(int salary);
 }
