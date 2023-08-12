@@ -1,17 +1,25 @@
 package ru.skypro.lessons.springboot.weblibrary.model;
 
+import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
 
-    private static int idGenerator = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int id;
     private String name;
     private int salary;
 
     public Employee(String name, int salary) {
-        this.id = idGenerator++;
         this.name = name;
         this.salary = salary;
+    }
+
+    public Employee() {
     }
 
     public String getName() {
@@ -36,14 +44,5 @@ public class Employee {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                '}';
     }
 }
