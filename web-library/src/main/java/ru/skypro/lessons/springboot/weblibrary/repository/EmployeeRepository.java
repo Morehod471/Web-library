@@ -2,29 +2,39 @@ package ru.skypro.lessons.springboot.weblibrary.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary.model.Employee;
 
 import java.util.List;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
 
-    @Query("SELECT SUM(e.salary) FROM Employee e")
-    int findSalary();
+    @Query(value = "SELECT * FROM employee", nativeQuery = true)
+    List<EmployeeDto> findAllEmployees();
 
-    @Query("SELECT AVG(e.salary) FROM Employee e")
-    double findAverageSalary();
+    List<EmployeeDto> findByIdGreaterThan(int number);
 
-    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary) FROM Employee e " +
-            "WHERE e.salary = (SELECT MIN (e.salary) FROM Employee e)")
-    Page<EmployeeDto> findSalaryMin(Pageable pageable);
+    Page<EmployeeDto> findAll(Pageable employeeOfConcretePage);
 
-    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary) FROM Employee e " +
-            "WHERE e.salary = (SELECT MAX (e.salary) FROM Employee e)")
-    Page<EmployeeDto> findSalaryMax(Pageable pageable);
+    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto." +
+            "EmployeeFullInfo(e.id, e.name , e.salary , p.name) " +
+            "FROM Employee e join fetch Position p " +
+            "WHERE e.position = p and e.id= :id")
+    List<EmployeeFullInfo> findAllEmployeeFullInfo(@Param("id") int id);
 
-    List<EmployeeDto> findEmployeesWithSalaryHigherThan(double salary);
+    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto." +
+            "EmployeeFullInfo(e.name , e.salary , p.name) " +
+            "FROM Employee e join fetch Position p " +
+            "WHERE e.position = p and p.name = :position")
+    List<EmployeeFullInfo> getEmployeesFullPosition(@Param("position") String position);
 
+    @Query( "SELECT new ru.skypro.lessons.springboot.weblibrary.dto." +
+            "EmployeeFullInfo(e.name , e.salary , p.name) " +
+            "FROM Employee e  left join Position p on p.id= e.position.id " +
+            "WHERE e.salary = (select  max (e.salary) from  Employee e) ")
+    List<EmployeeFullInfo> withHighestSalary();
 }

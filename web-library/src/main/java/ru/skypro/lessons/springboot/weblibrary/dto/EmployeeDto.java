@@ -1,25 +1,35 @@
 package ru.skypro.lessons.springboot.weblibrary.dto;
 
+
+import ru.skypro.lessons.springboot.weblibrary.model.Employee;
+
 public class EmployeeDto {
-
-    private int id;
+    private Integer id;
     private String name;
-    private int salary;
+    private Integer salary;
 
-    public EmployeeDto() {
+
+    public static EmployeeDto fromEmployee(Employee employee) {
+        EmployeeDto employeeDTO = new EmployeeDto();
+        employeeDTO.setId(employee.getId());
+        employeeDTO.setName(employee.getName());
+        employeeDTO.setSalary(employee.getSalary());
+        return employeeDTO;
     }
 
-    public EmployeeDto(int id, String name, int salary) {
-        this.id = id;
-        this.name = name;
-        this.salary = salary;
+    public Employee toEmployee() {
+        Employee employee = new Employee();
+        employee.setId(this.getId());
+        employee.setName(this.getName());
+        employee.setSalary(this.getSalary());
+        return employee;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -37,14 +47,5 @@ public class EmployeeDto {
 
     public void setSalary(int salary) {
         this.salary = salary;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                '}';
     }
 }
