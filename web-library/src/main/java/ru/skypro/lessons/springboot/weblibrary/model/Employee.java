@@ -1,7 +1,6 @@
 package ru.skypro.lessons.springboot.weblibrary.model;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 
 @Entity
 @Table(name = "employee")
