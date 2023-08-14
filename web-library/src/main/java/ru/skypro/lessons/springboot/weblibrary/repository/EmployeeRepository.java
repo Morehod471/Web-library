@@ -1,66 +1,29 @@
 package ru.skypro.lessons.springboot.weblibrary.repository;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
 import ru.skypro.lessons.springboot.weblibrary.model.Employee;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-@Repository
-public class EmployeeRepository {
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    private final List<Employee> employeeList = new ArrayList<>();
+    @Query("SELECT SUM (e.salary) FROM Employee e")
+    int findSalary();
 
-    @PostConstruct
-    public void init() {
-        employeeList.add(new Employee("Катя", 90_000));
-        employeeList.add(new Employee("Дима", 102_000));
-        employeeList.add(new Employee("Олег", 80_000));
-        employeeList.add(new Employee("Вика", 165_000));
-    }
+    @Query("SELECT AVG (e.salary) FROM Employee e")
+    double findAvgSalary();
 
-    public List<Employee> getAllEmployees() {
-        return Collections.unmodifiableList(employeeList);
-    }
+    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary) FROM Employee e " +
+            "WHERE e.salary=(SELECT MIN (e.salary) FROM Employee e)")
+    Page<EmployeeDto> findSalaryMin(Pageable pageable);
 
-    public Employee addEmployee(Employee employee) {
-        int newIndex = employeeList.size() + 1;
-        employeeList.add(employee);
-        employee.setId(newIndex);
-        return employee;
-    }
+    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary) FROM Employee e " +
+            "WHERE e.salary=(SELECT MAX (e.salary) FROM Employee e)")
+    Page<EmployeeDto> findSalaryMax(Pageable pageable);
 
-    public void editEmployee(int id, Employee employee) {
-        int indexForUpdating = findIndexById(id);
-        if (indexForUpdating != -1) {
-            employeeList.set(indexForUpdating, employee);
-        }
-    }
-
-    public Optional<Employee> findById(int id) {
-        return employeeList.stream()
-                .filter(employee -> employee.getId() == id)
-                .findFirst();
-    }
-
-    public void deleteEmployee(int id) {
-        int indexForRemoving = findIndexById(id);
-        if (indexForRemoving != -1) {
-            employeeList.remove(indexForRemoving);
-        }
-    }
-
-    private int findIndexById(int id) {
-        int index = -1;
-        for (int i = 0; i < employeeList.size(); i++) {
-            if (employeeList.get(i).getId() == id) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
+    List<EmployeeDto> findEmployeesBySalaryGreaterThan(double salary);
 }

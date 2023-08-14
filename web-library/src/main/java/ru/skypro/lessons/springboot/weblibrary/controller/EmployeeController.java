@@ -1,6 +1,7 @@
 package ru.skypro.lessons.springboot.weblibrary.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
 import ru.skypro.lessons.springboot.weblibrary.model.Employee;
 import ru.skypro.lessons.springboot.weblibrary.service.EmployeeService;
 
@@ -16,43 +17,38 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/all")
-    public List<Employee> showAllEmployees() {
-        return employeeService.getAllEmployees();
-    }
-
     @GetMapping("/salary/sum")
     public Integer showSalary() {
         return employeeService.findSalary();
     }
 
     @GetMapping("/salary/min")
-    public Employee showSalaryMin() {
+    public EmployeeDto showSalaryMin() {
         return employeeService.findSalaryMin();
     }
 
     @GetMapping("/salary/max")
-    public Employee showSalaryMax() {
+    public EmployeeDto showSalaryMax() {
         return employeeService.findSalaryMax();
     }
 
     @GetMapping("/high-salary")
-    public List<Employee> showSalaryHigh() {
+    public List<EmployeeDto> showSalaryHigh() {
         return employeeService.findSalaryHigh();
     }
 
     @PostMapping
-    public List<Employee> addEmployee(@RequestBody List<Employee> employeeList) {
+    public List<EmployeeDto> addEmployee(@RequestBody List<EmployeeDto> employeeList) {
         return employeeService.addEmployee(employeeList);
     }
 
     @PutMapping("/{id}")
-    public void editEmployee(@PathVariable int id, @RequestBody Employee employee) {
+    public void editEmployee(@PathVariable int id, @RequestBody EmployeeDto employee) {
         employeeService.editEmployee(id, employee);
     }
 
     @GetMapping("/{id}")
-    public Employee findEmployeeById(@PathVariable int id) {
+    public EmployeeDto findEmployeeById(@PathVariable int id) {
         return employeeService.findEmployeeById(id);
     }
 
@@ -62,7 +58,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/salaryHigherThan")
-    public List<Employee> findSalaryHigherThan(@RequestParam int salary) {
+    public List<EmployeeDto> findSalaryHigherThan(@RequestParam int salary) {
         return employeeService.findSalaryHigherThan(salary);
     }
 }
