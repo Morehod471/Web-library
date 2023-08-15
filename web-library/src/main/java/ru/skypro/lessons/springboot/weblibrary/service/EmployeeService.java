@@ -39,6 +39,11 @@ public class EmployeeService {
         );
     }
 
+    public List<EmployeeDto> findAllEmployees() {
+        return employeeRepository.findAll().stream()
+                .map(employeeMapper::fromEntity)
+                .collect(Collectors.toList());
+    }
 
     public Integer findSalary() {
         return employeeRepository.findSalary();

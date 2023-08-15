@@ -16,6 +16,11 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @GetMapping("/all")
+    public List<EmployeeDto> findAllEmployees() {
+        return employeeService.findAllEmployees();
+    }
+
     @GetMapping("/salary/sum")
     public Integer showSalary() {
         return employeeService.findSalary();
