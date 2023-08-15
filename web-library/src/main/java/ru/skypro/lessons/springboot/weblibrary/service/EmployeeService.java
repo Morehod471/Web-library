@@ -10,7 +10,6 @@ import ru.skypro.lessons.springboot.weblibrary.exception.EmployeeNotValidExcepti
 import ru.skypro.lessons.springboot.weblibrary.model.Employee;
 import ru.skypro.lessons.springboot.weblibrary.repository.EmployeeRepository;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

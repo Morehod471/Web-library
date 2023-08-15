@@ -2,7 +2,6 @@ package ru.skypro.lessons.springboot.weblibrary.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
-import ru.skypro.lessons.springboot.weblibrary.model.Employee;
 import ru.skypro.lessons.springboot.weblibrary.service.EmployeeService;
 
 import java.util.List;

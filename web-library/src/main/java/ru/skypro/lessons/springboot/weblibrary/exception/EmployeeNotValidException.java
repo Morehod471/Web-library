@@ -1,7 +1,6 @@
 package ru.skypro.lessons.springboot.weblibrary.exception;
 
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
-import ru.skypro.lessons.springboot.weblibrary.model.Employee;
 
 public class EmployeeNotValidException extends RuntimeException {
 
