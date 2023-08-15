@@ -17,11 +17,13 @@ Content-Type: application/json
 [
   {
     "name": "Максима",
-    "salary": 89000
+    "salary": 89000,
+    "position": "Мен"
   },
   {
     "name": "Эрик",
-    "salary": 115000
+    "salary": 115000,
+    "position": "ком"
   }
 ]
 
@@ -45,3 +47,9 @@ DELETE http://localhost:8080/employee/5
 
 ### Получение сотрудника с зп выше, чем
 GET http://localhost:8080/employee/salaryHigherThan?salary=80000
+
+### Получение сотрудника с макс ЗП
+GET http://localhost:8080/employee/withHighestSalary
+
+### Получение сотрудников
+GET http://localhost:8080/employee

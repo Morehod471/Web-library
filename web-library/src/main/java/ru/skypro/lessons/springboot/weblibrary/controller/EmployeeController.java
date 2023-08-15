@@ -5,6 +5,7 @@ import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
 import ru.skypro.lessons.springboot.weblibrary.service.EmployeeService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/employee")
@@ -65,4 +66,18 @@ public class EmployeeController {
     public List<EmployeeDto> findSalaryHigherThan(@RequestParam int salary) {
         return employeeService.findSalaryHigherThan(salary);
     }
+
+    @GetMapping("/withHighestSalary")
+    public List<EmployeeDto> findEmployeeWithHighestSalary() {
+        return employeeService.findEmployeeWithHighestSalary();
+    }
+
+    @GetMapping
+    public List<EmployeeDto> findEmployee(@RequestParam(required = false) String position) {
+        return employeeService.findEmployee(
+                Optional.ofNullable(position)
+                        .filter(pos -> !pos.isEmpty())
+                        .orElse(null));
+    }
+
 }

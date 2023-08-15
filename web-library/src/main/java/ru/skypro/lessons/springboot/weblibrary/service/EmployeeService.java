@@ -1,5 +1,6 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
+import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,11 +59,11 @@ public class EmployeeService {
     }
 
     public EmployeeDto findSalaryMax() {
-        Page<EmployeeDto> page = employeeRepository.findSalaryMax(PageRequest.of(0, 1));
-        if (page.isEmpty()) {
+        List<EmployeeDto> employeeWithMaxSalary = findEmployeeWithHighestSalary() ;
+        if (employeeWithMaxSalary.isEmpty()) {
             return null;
         }
-        return page.getContent().get(0);
+        return employeeWithMaxSalary.get(0);
     }
 
     public List<EmployeeDto> findSalaryHigh() {
@@ -107,6 +108,19 @@ public class EmployeeService {
 
     public List<EmployeeDto> findSalaryHigherThan(double salary) {
         return employeeRepository.findEmployeesBySalaryGreaterThan(salary).stream()
+                .map(employeeMapper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeDto> findEmployeeWithHighestSalary() {
+        return employeeRepository.findSalaryMax();
+    }
+
+    public List<EmployeeDto> findEmployee(@Nullable String position) {
+        return Optional.ofNullable(position)
+                .map(pos -> employeeRepository.findEmployeesByPosition_Position(pos))
+                .orElseGet(()->employeeRepository.findAll())
+                .stream()
                 .map(employeeMapper::fromEntity)
                 .collect(Collectors.toList());
     }

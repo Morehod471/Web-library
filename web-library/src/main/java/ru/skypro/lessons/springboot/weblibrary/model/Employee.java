@@ -13,6 +13,11 @@ public class Employee {
     private String name;
     private int salary;
 
+    @ManyToOne
+    @JoinColumn(name="position_id")
+    private Position position;
+
+
     public Employee(String name, int salary) {
         this.name = name;
         this.salary = salary;
@@ -43,5 +48,13 @@ public class Employee {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

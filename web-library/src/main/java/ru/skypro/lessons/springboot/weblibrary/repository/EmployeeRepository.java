@@ -19,13 +19,19 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query("SELECT AVG (e.salary) FROM Employee e")
     double findAvgSalary();
 
-    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary) FROM Employee e " +
+    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary, p.position) " +
+            "FROM Employee e LEFT JOIN Position p ON p.id = e.position.id " +
             "WHERE e.salary=(SELECT MIN (e.salary) FROM Employee e)")
     Page<EmployeeDto> findSalaryMin(Pageable pageable);
 
-    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary) FROM Employee e " +
+    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto(e.id, e.name, e.salary, p.position) " +
+            "FROM Employee e LEFT JOIN Position p ON p.id = e.position.id " +
             "WHERE e.salary=(SELECT MAX (e.salary) FROM Employee e)")
-    Page<EmployeeDto> findSalaryMax(Pageable pageable);
+    List<EmployeeDto> findSalaryMax();
 
     List<Employee> findEmployeesBySalaryGreaterThan(double salary);
+
+    List<Employee> findEmployeesByPosition_Position(String position);
+
+
 }
