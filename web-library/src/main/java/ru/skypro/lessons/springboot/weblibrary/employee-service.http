@@ -16,7 +16,7 @@ Content-Type: application/json
 
 [
   {
-    "name": "Максим",
+    "name": "Максима",
     "salary": 89000
   },
   {
