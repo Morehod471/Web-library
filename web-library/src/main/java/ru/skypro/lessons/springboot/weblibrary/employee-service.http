@@ -29,7 +29,7 @@ Content-Type: application/json
 GET http://localhost:8080/employee/all
 
 ### Обновление сотрудника
-PUT http://localhost:8080/employee/7
+PUT http://localhost:8080/employee/5
 Content-Type: application/json
 
 {
@@ -38,10 +38,10 @@ Content-Type: application/json
 }
 
 ### Получение сотрудника
-GET http://localhost:8080/employee/7
+GET http://localhost:8080/employee/5
 
 ### Удаление сотрудника
-DELETE http://localhost:8080/employee/7
+DELETE http://localhost:8080/employee/5
 
 ### Получение сотрудника с зп выше, чем
 GET http://localhost:8080/employee/salaryHigherThan?salary=80000

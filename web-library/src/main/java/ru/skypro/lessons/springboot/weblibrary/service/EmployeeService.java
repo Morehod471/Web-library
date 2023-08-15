@@ -101,6 +101,8 @@ public class EmployeeService {
     }
 
     public List<EmployeeDto> findSalaryHigherThan(double salary) {
-        return employeeRepository.findEmployeesBySalaryGreaterThan(salary);
+        return employeeRepository.findEmployeesBySalaryGreaterThan(salary).stream()
+                .map(employeeMapper::fromEntity)
+                .collect(Collectors.toList());
     }
 }

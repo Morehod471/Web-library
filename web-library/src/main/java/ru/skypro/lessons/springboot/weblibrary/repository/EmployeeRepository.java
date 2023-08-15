@@ -25,5 +25,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             "WHERE e.salary=(SELECT MAX (e.salary) FROM Employee e)")
     Page<EmployeeDto> findSalaryMax(Pageable pageable);
 
-    List<EmployeeDto> findEmployeesBySalaryGreaterThan(double salary);
+    List<Employee> findEmployeesBySalaryGreaterThan(double salary);
 }
