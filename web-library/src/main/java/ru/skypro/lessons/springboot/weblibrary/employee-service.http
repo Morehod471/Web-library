@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 ### Получение сотрудника
-GET http://localhost:8080/employee/5
+GET http://localhost:8080/employee/2
 
 ### Удаление сотрудника
 DELETE http://localhost:8080/employee/5
@@ -52,4 +52,10 @@ GET http://localhost:8080/employee/salaryHigherThan?salary=80000
 GET http://localhost:8080/employee/withHighestSalary
 
 ### Получение сотрудников
-GET http://localhost:8080/employee
+GET http://localhost:8080/employee?position=мен
+
+### Получение полной информации о сотруднике
+GET http://localhost:8080/employee/2/fullinfo
+
+### Получение страницы сотрудников
+GET http://localhost:8080/employee/page?page=0

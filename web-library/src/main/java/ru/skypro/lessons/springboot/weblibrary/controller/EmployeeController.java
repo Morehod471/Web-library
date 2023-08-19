@@ -80,4 +80,13 @@ public class EmployeeController {
                         .orElse(null));
     }
 
+    @GetMapping("/{id}/fullinfo")
+    public EmployeeDto getFullInfo(@PathVariable int id) {
+        return employeeService.getFullInfo(id);
+    }
+
+    @GetMapping("/page")
+    public List<EmployeeDto> findEmployeeFromPage(@RequestParam(required = false, defaultValue = "0") int page) {
+        return employeeService.findEmployeeFromPage(page);
+    }
 }

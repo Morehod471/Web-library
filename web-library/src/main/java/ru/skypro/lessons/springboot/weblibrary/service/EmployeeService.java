@@ -4,6 +4,7 @@ import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.*;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
 import ru.skypro.lessons.springboot.weblibrary.exception.EmployeeNotFoundException;
@@ -97,6 +98,10 @@ public class EmployeeService {
     public EmployeeDto findEmployeeById(int id) {
         return employeeRepository.findById(id)
                 .map(employeeMapper::fromEntity)
+                .map(employeeDto -> {
+                    employeeDto.setPosition(null);
+                    return employeeDto;
+                })
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
@@ -118,9 +123,21 @@ public class EmployeeService {
 
     public List<EmployeeDto> findEmployee(@Nullable String position) {
         return Optional.ofNullable(position)
-                .map(pos -> employeeRepository.findEmployeesByPosition_Position(pos))
-                .orElseGet(()->employeeRepository.findAll())
+                .map(employeeRepository::findEmployeesByPosition_Position)
+                .orElseGet(employeeRepository::findAll)
                 .stream()
+                .map(employeeMapper::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public EmployeeDto getFullInfo(int id) {
+        return employeeRepository.findById(id)
+                .map(employeeMapper::fromEntity)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+        }
+
+    public List<EmployeeDto> findEmployeeFromPage(int page) {
+        return employeeRepository.findAll(PageRequest.of(page, 10)).stream()
                 .map(employeeMapper::fromEntity)
                 .collect(Collectors.toList());
     }
