@@ -70,7 +70,7 @@ public class EmployeeController {
         return employeeService.getEmployeesFull(id);
     }
 
-    @GetMapping("/paging/page")
+    @GetMapping("/page")
     public List<EmployeeDto> getEmployeesWithPaging(@RequestParam("page") int page) {
         return employeeService.getEmployeesWithPaging(page, 10);
     }
