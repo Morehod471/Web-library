@@ -1,28 +1,40 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
-import ru.skypro.lessons.springboot.weblibrary.model.Employee;
+import jakarta.annotation.Nullable;
+import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
+import ru.skypro.lessons.springboot.weblibrary.model.EmployeeFullInfo;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    List<Employee> getAllEmployees();
+    List<EmployeeDto> findAllEmployees();
 
-    public Integer findSalary();
+    Integer findSalary();
 
-    public Employee findSalaryMin();
+    EmployeeDto findSalaryMin();
 
-    public Employee findSalaryMax();
+    EmployeeDto findSalaryMax();
 
-    public List<Employee> findSalaryHigh();
+    List<EmployeeDto> findSalaryHigh();
 
-    public List<Employee> addEmployee(List<Employee> employeeList);
+    List<EmployeeDto> addEmployee(List<EmployeeDto> employeeList);
 
-    public void editEmployee(int id, Employee employee);
+    void editEmployee(int id, EmployeeDto employee);
 
-    public Employee findEmployeeById(int id);
+    EmployeeDto findEmployeeById(int id);
 
-    public void deleteEmployee(int id);
+    void deleteEmployee(int id);
 
-    public List<Employee> findSalaryHigherThan(int salary);
+    List<EmployeeDto> findSalaryHigherThan(double salary);
+
+    List<EmployeeDto> findEmployeeWithHighestSalary();
+
+    List<EmployeeDto> findEmployee(@Nullable String position);
+
+    EmployeeDto getFullInfo(int id);
+
+    List<EmployeeDto> findEmployeeFromPage(int page);
+
+    List<EmployeeFullInfo> findAllEmployeeFullInfo();
 }

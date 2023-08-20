@@ -1,17 +1,29 @@
 package ru.skypro.lessons.springboot.weblibrary.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
 
-    private static int idGenerator = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int id;
     private String name;
     private int salary;
 
+    @ManyToOne
+    @JoinColumn(name="position_id")
+    private Position position;
+
+
     public Employee(String name, int salary) {
-        this.id = idGenerator++;
         this.name = name;
         this.salary = salary;
+    }
+
+    public Employee() {
     }
 
     public String getName() {
@@ -38,12 +50,11 @@ public class Employee {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                '}';
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }
