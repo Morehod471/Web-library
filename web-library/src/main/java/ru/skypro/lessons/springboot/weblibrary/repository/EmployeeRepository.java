@@ -5,7 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
-import ru.skypro.lessons.springboot.weblibrary.model.Employee;
+import ru.skypro.lessons.springboot.weblibrary.dto.ReportDto;
+import ru.skypro.lessons.springboot.weblibrary.entity.Employee;
+import ru.skypro.lessons.springboot.weblibrary.entity.Report;
 
 import java.util.List;
 
@@ -30,8 +32,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     List<EmployeeDto> findSalaryMax();
 
     List<Employee> findEmployeesBySalaryGreaterThan(double salary);
-
     List<Employee> findEmployeesByPosition_Position(String position);
 
+    @Query("SELECT new ru.skypro.lessons.springboot.weblibrary.dto.ReportDto(e.position.position, count (e.id), " +
+            "max (e.salary), min (e.salary), avg(e.salary)) FROM Employee e GROUP BY e.position.position")
+    List<ReportDto> buildReport();
 
 }

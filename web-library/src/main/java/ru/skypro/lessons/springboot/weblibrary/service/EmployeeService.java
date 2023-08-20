@@ -1,16 +1,21 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.*;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
+import ru.skypro.lessons.springboot.weblibrary.dto.ReportDto;
+import ru.skypro.lessons.springboot.weblibrary.entity.Report;
 import ru.skypro.lessons.springboot.weblibrary.exception.EmployeeNotFoundException;
 import ru.skypro.lessons.springboot.weblibrary.exception.EmployeeNotValidException;
-import ru.skypro.lessons.springboot.weblibrary.model.Employee;
+import ru.skypro.lessons.springboot.weblibrary.entity.Employee;
 import ru.skypro.lessons.springboot.weblibrary.repository.EmployeeRepository;
+import ru.skypro.lessons.springboot.weblibrary.repository.ReportRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +25,18 @@ import java.util.stream.Collectors;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final ReportRepository reportRepository;
     private final EmployeeMapper employeeMapper;
+    private final ObjectMapper objectMapper;
 
-    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
+    public EmployeeService(EmployeeRepository employeeRepository,
+                           ReportRepository reportRepository,
+                           EmployeeMapper employeeMapper,
+                           ObjectMapper objectMapper) {
         this.employeeRepository = employeeRepository;
+        this.reportRepository = reportRepository;
         this.employeeMapper = employeeMapper;
+        this.objectMapper = objectMapper;
     }
 
     @PostConstruct
@@ -140,5 +152,23 @@ public class EmployeeService {
         return employeeRepository.findAll(PageRequest.of(page, 10)).stream()
                 .map(employeeMapper::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    public int generateReport() {
+        var report = employeeRepository.buildReport();
+        try {
+            var content = objectMapper.writeValueAsString(report);
+            var reportEntity = new Report();
+            reportEntity.setReport(content);
+            return reportRepository.save(reportEntity).getId();
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Нельзя создать отчёт", e);
+        }
+    }
+
+    public String findReport(int id) {
+        return reportRepository.findById(id)
+                .map(Report::getReport)
+                .orElse(null);
     }
 }

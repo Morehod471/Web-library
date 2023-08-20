@@ -2,8 +2,8 @@ package ru.skypro.lessons.springboot.weblibrary.service;
 
 import org.springframework.stereotype.Component;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
-import ru.skypro.lessons.springboot.weblibrary.model.Employee;
-import ru.skypro.lessons.springboot.weblibrary.model.Position;
+import ru.skypro.lessons.springboot.weblibrary.entity.Employee;
+import ru.skypro.lessons.springboot.weblibrary.entity.Position;
 
 import java.util.Optional;
 
