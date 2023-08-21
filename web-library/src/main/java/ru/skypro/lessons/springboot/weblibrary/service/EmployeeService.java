@@ -1,7 +1,6 @@
 package ru.skypro.lessons.springboot.weblibrary.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.*;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
-import ru.skypro.lessons.springboot.weblibrary.dto.ReportDto;
 import ru.skypro.lessons.springboot.weblibrary.entity.Report;
 import ru.skypro.lessons.springboot.weblibrary.exception.EmployeeNotFoundException;
 import ru.skypro.lessons.springboot.weblibrary.exception.EmployeeNotValidException;
