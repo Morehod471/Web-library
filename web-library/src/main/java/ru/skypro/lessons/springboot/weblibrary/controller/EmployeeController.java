@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
 import ru.skypro.lessons.springboot.weblibrary.model.EmployeeFullInfo;
 import ru.skypro.lessons.springboot.weblibrary.service.EmployeeService;
-import ru.skypro.lessons.springboot.weblibrary.service.EmployeeServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -94,6 +93,5 @@ public class EmployeeController {
 
     @GetMapping("/EmployeeFullInfo")
     public List<EmployeeFullInfo> findAllEmployeeFullInfo() {
-        return employeeService.findAllEmployeeFullInfo();
-    }
+        return employeeService.findAllEmployeeFullInfo();    }
 }
