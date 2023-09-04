@@ -4,6 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.*;
@@ -15,6 +19,7 @@ import ru.skypro.lessons.springboot.weblibrary.entity.Employee;
 import ru.skypro.lessons.springboot.weblibrary.repository.EmployeeRepository;
 import ru.skypro.lessons.springboot.weblibrary.repository.ReportRepository;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -164,9 +169,12 @@ public class EmployeeService {
         }
     }
 
-    public String findReport(int id) {
-        return reportRepository.findById(id)
-                .map(Report::getReport)
-                .orElse(null);
+    public Resource findReport(int id) {
+        return new ByteArrayResource(
+                reportRepository.findById(id)
+                        .orElseThrow(() -> new IllegalStateException("Report with id" + id + " not found"))
+                        .getReport()
+                        .getBytes(StandardCharsets.UTF_8)
+        );
     }
 }
