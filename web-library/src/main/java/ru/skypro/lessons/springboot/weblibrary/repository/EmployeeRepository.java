@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import ru.skypro.lessons.springboot.weblibrary.dto.EmployeeDto;
 import ru.skypro.lessons.springboot.weblibrary.dto.ReportDto;
 import ru.skypro.lessons.springboot.weblibrary.entity.Employee;
-import ru.skypro.lessons.springboot.weblibrary.entity.Report;
 
 import java.util.List;
 
